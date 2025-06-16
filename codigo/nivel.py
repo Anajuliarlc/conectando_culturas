@@ -93,18 +93,22 @@ class BaseNivel:
 
         # Mostrar dica de transição
         if self.transicao_ativa:
-            texto = self.fonte.render("Aperte ENTER para entrar", True, (255, 255, 255))
+            texto = self.fonte.render("Aperte ENTER para entrar", True, (0, 0, 0))
             self.colocar_superficie.blit(texto, (215, 290))
 
         # Mostrar nome do item
         for item in self.itens_mapa:
-            nome = f'{item["nome_portugues"]} - {item["nome_ingles"]}'
-            texto = self.fonte.render(nome, True, (255, 255, 255))
-            texto_rect = texto.get_rect(center=(item["rect"].centerx, item["rect"].top - 10))
-            self.colocar_superficie.blit(texto, texto_rect)
+            nome_portugues = item["nome_portugues"]
+            nome_ingles = item["nome_ingles"]
 
-        for item in self.itens_mapa:
-            pg.draw.rect(self.colocar_superficie, (255, 0, 0), item["rect"], 1)  # Borda vermelha
+            texto_pt = self.fonte.render(nome_portugues, True, (0, 0, 0))
+            texto_en = self.fonte.render(nome_ingles, True, (0, 0, 0))
+
+            x = item["rect"].centerx
+            y = item["rect"].top - 20  # posição da primeira linha
+
+            self.colocar_superficie.blit(texto_pt, texto_pt.get_rect(center=(x, y)))
+            self.colocar_superficie.blit(texto_en, texto_en.get_rect(center=(x, y + 20)))  # linha de baixo
 
 class Nivel_cidade(BaseNivel):  
     def __init__(self, nome_personagem, inventario):  
