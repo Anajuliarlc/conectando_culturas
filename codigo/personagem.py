@@ -29,7 +29,7 @@ class Personagem(pg.sprite.Sprite):
         self.direction = pg.math.Vector2()
         self.pos = pg.math.Vector2(self.rect.midbottom)
         self.pos_anterior = self.pos.copy()
-        self.speed = 200
+        self.speed = 400
         
 
     
