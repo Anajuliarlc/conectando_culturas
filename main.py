@@ -1,6 +1,7 @@
 import pygame as pg
 import sys
 import os
+import random
 
 sys.path.insert(0, "./codigo")
 
@@ -11,7 +12,7 @@ from tela_selecao import TelaSelecao
 from menu_principal import MenuPrincipal
 from tela_opcoes import TelaOpcoes
 from gerenciador_sons import GerenciadorSons
-from lista_compras import ListaCompras
+from lista_compras import ListaCompras, ITENS_DISPONIVEIS_MERCADO
 from quiz_final import QuizFinal
 from tela_vitoria import TelaVitoria
 
@@ -29,7 +30,8 @@ class Jogo:
         self.menu = MenuPrincipal(self.som)
         self.selecao = TelaSelecao(self.som)
         self.opcoes = TelaOpcoes(self.som)
-        self.lista_compras = ListaCompras(['Cenoura', 'Leite', 'Queijo'])
+        itens_aleatorios = random.sample(ITENS_DISPONIVEIS_MERCADO, 4) 
+        self.lista_compras = ListaCompras(itens_aleatorios)
         self.quiz = QuizFinal(self.som)
         self.vitoria = TelaVitoria(self.som)
         self.som.tocar_musica()

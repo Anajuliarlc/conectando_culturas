@@ -1,5 +1,10 @@
 import pygame as pg
 
+ITENS_DISPONIVEIS_MERCADO = [
+    'Pão', 'Carne', 'Maçã', 'Cenoura', 'Tomate', 'Cebola', 'Açúcar', 'Farinha',
+    'Queijo', 'Manteiga', 'Leite', 'Fermento em pó', 'Chocolate', 'Ovo', 'Óleo']
+
+
 class ListaCompras:
     def __init__(self, itens_necessarios):
         self.itens = itens_necessarios  # lista de strings
