@@ -57,11 +57,14 @@ class Jogo:
                             self.inventario.navegar(-1)
                         elif evento.key == pg.K_DOWN:
                             self.inventario.navegar(1)
-                        elif evento.key == pg.K_e:
+                        elif evento.key == pg.K_r:
+                            if self.inventario.visivel:
+                                self.inventario.remover_selecionado()
+                        elif evento.key == pg.K_o:
                             self.estado = 'opcoes'
 
                     elif self.estado == 'opcoes':
-                        if evento.key == pg.K_e:
+                        if evento.key == pg.K_o:
                             self.estado = 'cidade' if isinstance(self.nivel, Nivel_cidade) else 'mercado'
 
 

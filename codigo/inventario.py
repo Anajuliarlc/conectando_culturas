@@ -17,6 +17,18 @@ class Inventario:
     def adicionar_item(self, item):
         self.itens.append(item)
 
+    def remover_selecionado(self):
+        if not self.itens:
+            return
+        # Remove o item selecionado
+        del self.itens[self.selecionado]
+        # Ajusta o índice selecionado para não ultrapassar o tamanho da lista
+        if self.selecionado >= len(self.itens):
+            self.selecionado = len(self.itens) - 1
+        if self.selecionado < 0:
+            self.selecionado = 0
+
+
     def desenhar(self, tela):
         if not self.visivel:
             return
