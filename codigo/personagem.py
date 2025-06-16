@@ -3,22 +3,22 @@ from config import *
 from lista_controles import ListaControles
 import os
 
-def carregar_sprites_personagem():
+def carregar_sprites_personagem(nome):
     cam_base = os.path.join("niveis_data", "personagens_img")
-    tamanho = (200, 350)  # largura x altura ideal
+    tamanho = (200, 350)
     return {
-        'cima': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_w.png")).convert_alpha(), tamanho),
-        'baixo': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_s.png")).convert_alpha(), tamanho),
-        'esquerda': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_a.png")).convert_alpha(), tamanho),
-        'direita': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_d.png")).convert_alpha(), tamanho)
+        'cima': pg.transform.scale(pg.image.load(os.path.join(cam_base, f"{nome}_w.png")).convert_alpha(), tamanho),
+        'baixo': pg.transform.scale(pg.image.load(os.path.join(cam_base, f"{nome}_s.png")).convert_alpha(), tamanho),
+        'esquerda': pg.transform.scale(pg.image.load(os.path.join(cam_base, f"{nome}_a.png")).convert_alpha(), tamanho),
+        'direita': pg.transform.scale(pg.image.load(os.path.join(cam_base, f"{nome}_d.png")).convert_alpha(), tamanho)
     }
 
 class Personagem(pg.sprite.Sprite):
-    def __init__(self, pos, grupo):
+    def __init__(self, pos, grupo, nome_personagem):
 
         super().__init__(grupo)
 
-        self.sprites = carregar_sprites_personagem()
+        self.sprites = carregar_sprites_personagem(nome_personagem)
         self.direcao_atual = 'baixo'
         self.image = self.sprites[self.direcao_atual]
         self.rect = self.image.get_rect(midbottom = pos)
