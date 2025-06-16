@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="42" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="62">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="42" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="64">
  <tileset firstgid="1" name="tilesets_mer" tilewidth="32" tileheight="32" spacing="5" tilecount="208" columns="16">
   <image source="tilesets.png" width="600" height="498"/>
  </tileset>
@@ -117,93 +117,97 @@
  <objectgroup id="7" name="itens">
   <object id="44" name="item_acucar" x="457" y="600" width="77" height="101">
    <properties>
-    <property name="nome_ingles" value="sugar"/>
-    <property name="nome_portugues" value="açúcar"/>
+    <property name="nome_ingles" value="Sugar"/>
+    <property name="nome_portugues" value="Açúcar"/>
    </properties>
   </object>
   <object id="47" name="item_chocolate" x="1235" y="210" width="48" height="97">
    <properties>
-    <property name="nome_ingles" value="chocolate"/>
-    <property name="nome_portugues" value="chocolate"/>
+    <property name="nome_ingles" value="Chocolate"/>
+    <property name="nome_portugues" value="Chocolate"/>
    </properties>
   </object>
   <object id="48" name="item_ovo" x="1172" y="211" width="46" height="108">
    <properties>
-    <property name="nome_ingles" value="egg"/>
-    <property name="nome_portugues" value="ovo"/>
+    <property name="nome_ingles" value="Egg"/>
+    <property name="nome_portugues" value="Ovo"/>
    </properties>
   </object>
   <object id="49" name="item_oleo" x="1096" y="199" width="46" height="122">
    <properties>
-    <property name="nome_ingles" value="oil"/>
-    <property name="nome_portugues" value="óleo"/>
+    <property name="nome_ingles" value="Oil"/>
+    <property name="nome_portugues" value="Óleo"/>
    </properties>
   </object>
   <object id="50" name="item_cebola" x="887" y="208" width="71" height="118">
    <properties>
-    <property name="nome_ingles" value="onion"/>
-    <property name="nome_portugues" value="cebola"/>
+    <property name="nome_ingles" value="Onion"/>
+    <property name="nome_portugues" value="Cebola"/>
    </properties>
   </object>
   <object id="51" name="item_tomate" x="782" y="201" width="67" height="112">
    <properties>
-    <property name="nome_ingles" value="tomato"/>
-    <property name="nome_portugues" value="tomate"/>
+    <property name="nome_ingles" value="Tomato"/>
+    <property name="nome_portugues" value="Tomate"/>
    </properties>
   </object>
   <object id="53" name="item_carne" x="845" y="51" width="48" height="100">
    <properties>
-    <property name="nome_ingles" value="meat"/>
-    <property name="nome_portugues" value="carne"/>
+    <property name="nome_ingles" value="Meat"/>
+    <property name="nome_portugues" value="Carne"/>
    </properties>
   </object>
   <object id="54" name="item_pao" x="412" y="51" width="58" height="118">
    <properties>
-    <property name="nome_ingles" value="bread"/>
-    <property name="nome_portugues" value="pão"/>
+    <property name="nome_ingles" value="Bread"/>
+    <property name="nome_portugues" value="Pão"/>
    </properties>
   </object>
   <object id="55" name="item_maca" x="475" y="196" width="47" height="124">
    <properties>
-    <property name="nome_ingles" value="apple"/>
-    <property name="nome_portugues" value="maçã"/>
+    <property name="nome_ingles" value="Apple"/>
+    <property name="nome_portugues" value="Maçã"/>
    </properties>
   </object>
   <object id="56" name="item_cenoura" x="563" y="188" width="57" height="127">
    <properties>
-    <property name="nome_ingles" value="carrot"/>
-    <property name="nome_portugues" value="cenoura"/>
+    <property name="nome_ingles" value="Carrot"/>
+    <property name="nome_portugues" value="Cenoura"/>
    </properties>
   </object>
   <object id="57" name="item_farinha" x="564" y="592" width="66" height="108">
    <properties>
-    <property name="nome_ingles" value="flour"/>
-    <property name="nome_portugues" value="farinha"/>
+    <property name="nome_ingles" value="Flour"/>
+    <property name="nome_portugues" value="Farinha"/>
    </properties>
   </object>
   <object id="58" name="item_queijo" x="799" y="604" width="52" height="97">
    <properties>
-    <property name="nome_ingles" value="cheese"/>
-    <property name="nome_portugues" value="queijo"/>
+    <property name="nome_ingles" value="Cheese"/>
+    <property name="nome_portugues" value="Queijo"/>
    </properties>
   </object>
   <object id="59" name="item_manteiga" x="891" y="601" width="58" height="96">
    <properties>
-    <property name="nome_ingles" value="butter"/>
-    <property name="nome_portugues" value="manteiga"/>
+    <property name="nome_ingles" value="Butter"/>
+    <property name="nome_portugues" value="Manteiga"/>
    </properties>
   </object>
   <object id="60" name="item_leite" x="1088" y="579" width="59" height="116">
    <properties>
-    <property name="nome_ingles" value="milk"/>
-    <property name="nome_portugues" value="leite"/>
+    <property name="nome_ingles" value="Milk"/>
+    <property name="nome_portugues" value="Leite"/>
    </properties>
   </object>
   <object id="61" name="item_fermento" x="1191" y="575" width="66" height="118">
    <properties>
-    <property name="nome_ingles" value="baking powder"/>
-    <property name="nome_portugues" value="fermento em pó"/>
+    <property name="nome_ingles" value="Baking powder"/>
+    <property name="nome_portugues" value="Fermento em pó"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="8" name="caixa" visible="0">
+  <object id="62" name="caixa_pagamento" x="68" y="239" width="175" height="177"/>
+  <object id="63" name="caixa_pagamento" x="71" y="518" width="170" height="180"/>
  </objectgroup>
 </map>

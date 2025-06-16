@@ -41,29 +41,30 @@ class TelaSelecao:
                 brilho.move_ip(0, 20)
                 pg.draw.rect(tela, (255, 255, 0), brilho, 6, border_radius=12)
 
-    def rodar(self):
+    def rodar(self, eventos):
         tela = pg.display.get_surface()
         if tela is None:
             print("⚠️ AVISO: nenhuma tela inicializada!")
-            return
+            return None
 
-        while True:
-            for evento in pg.event.get():
-                if evento.type == pg.QUIT:
-                    pg.quit()
-                    exit()
-                elif evento.type == pg.KEYDOWN:
-                    if evento.key == pg.K_a:
-                        self.index_selecionado = (self.index_selecionado - 1) % len(self.opcoes)
-                        self.sons.tocar_click()
-                    elif evento.key == pg.K_d:
-                        self.index_selecionado = (self.index_selecionado + 1) % len(self.opcoes)
-                        self.sons.tocar_click()
-                    elif evento.key == pg.K_RETURN:
-                        self.sons.tocar_click()
-                        return self.opcoes[self.index_selecionado]
+        for evento in eventos:
+            if evento.type == pg.QUIT:
+                pg.quit()
+                exit()
+            elif evento.type == pg.KEYDOWN:
+                if evento.key == pg.K_a:
+                    self.index_selecionado = (self.index_selecionado - 1) % len(self.opcoes)
+                    self.sons.tocar_click()
+                elif evento.key == pg.K_d:
+                    self.index_selecionado = (self.index_selecionado + 1) % len(self.opcoes)
+                    self.sons.tocar_click()
+                elif evento.key == pg.K_RETURN:
+                    self.sons.tocar_click()
+                    return self.opcoes[self.index_selecionado]
 
-            self.desenhar_interface(tela)
-            pg.display.flip()
-            self.relogio.tick(60)
+        self.desenhar_interface(tela)
+        pg.display.flip()
+        self.relogio.tick(60)
+        return None
+
 

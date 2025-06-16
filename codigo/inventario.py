@@ -1,11 +1,12 @@
 import pygame as pg
 
 class Inventario:
-    def __init__(self):
+    def __init__(self, som=None):
         self.itens = []
         self.visivel = False
         self.selecionado = 0
         self.nivel = None
+        self.som = som
 
     def set_nivel(self, nivel):
         self.nivel = nivel
@@ -20,6 +21,8 @@ class Inventario:
 
     def adicionar_item(self, item):
         self.itens.append(item)
+        if self.som:
+            self.som.tocar_som_pegar_obj()
 
     def remover_item(self):
         if not self.itens:

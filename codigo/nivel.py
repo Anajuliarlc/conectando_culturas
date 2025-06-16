@@ -6,7 +6,7 @@ import pytmx
 import os
 
 class BaseNivel:
-    def __init__(self, caminho_mapa, nome_personagem, pos_inicial, inventario):
+    def __init__(self, caminho_mapa, nome_personagem, pos_inicial, inventario, sons):
         self.colocar_superficie = pg.display.get_surface()
         self.tds_sprites = pg.sprite.Group()
         self.colisores = []
@@ -16,7 +16,10 @@ class BaseNivel:
         self.tmx_data = load_pygame(caminho_mapa)
         self.itens_mapa = []
         self.item_proximo = None
+        self.caixa_pagamento = []
         self.inventario = inventario
+        self.sons = sons
+        self.estado_quiz = False
 
         largura = self.tmx_data.width * self.tmx_data.tilewidth
         altura = self.tmx_data.height * self.tmx_data.tileheight
@@ -57,13 +60,16 @@ class BaseNivel:
                             "nome_ingles": obj.properties["nome_ingles"]
                         })
 
+                    elif obj.name == "caixa_pagamento":
+                        self.caixa_pagamento.append(pg.Rect(obj.x, obj.y, obj.width, obj.height))
+
         self.itens_originais = [item.copy() for item in self.itens_mapa]
-        
+
     def recolocar_item_no_mapa(self, item):
         # Adiciona o item na lista dos itens do mapa para reaparecer
         self.itens_mapa.append(item)
 
-    def rodar(self, dt, teclas):
+    def rodar(self, dt, teclas, eventos):
         self.personagem.update(dt)
 
         for colisor in self.colisores:
@@ -89,6 +95,7 @@ class BaseNivel:
             self.inventario.adicionar_item(self.item_proximo)
             self.itens_mapa.remove(self.item_proximo)
             self.item_proximo = None
+            self.sons.tocar_som_pegar_obj()
 
         # Renderização
         self.colocar_superficie.fill((0, 0, 0))
@@ -114,14 +121,36 @@ class BaseNivel:
             self.colocar_superficie.blit(texto_pt, texto_pt.get_rect(center=(x, y)))
             self.colocar_superficie.blit(texto_en, texto_en.get_rect(center=(x, y + 20)))  # linha de baixo
 
+        # Verifica se o personagem está na caixa
+        for caixa in self.caixa_pagamento:
+            if self.personagem.hitbox.colliderect(caixa):
+                texto = self.fonte.render("Would you like to see your purchases? Press ENTER", True, (0, 0, 0))
+                self.colocar_superficie.blit(texto, (200, 300))
+
+                if teclas[pg.K_RETURN]:
+                    nomes_inventario = sorted([item["nome_portugues"] for item in self.inventario.itens])
+                    nomes_esperados = sorted(self.inventario.lista_compras.itens)
+
+                    if nomes_inventario == nomes_esperados:
+                        mensagem = "Correct purchase! You can proceed to the quiz."
+                        self.estado_quiz = True
+                    else:
+                        mensagem = "Wrong purchase! Different items, missing or extra. Try again."
+
+                    texto_resultado = self.fonte.render(mensagem, True, (0, 0, 0))
+                    self.colocar_superficie.blit(texto_resultado, (200, 330))
+                break  # só precisa mostrar uma mensagem por vez
+
 class Nivel_cidade(BaseNivel):  
-    def __init__(self, nome_personagem, inventario):  
+    def __init__(self, nome_personagem, inventario, sons):  
         caminho_mapa = os.path.join("niveis_data", "cmap_tilesets", "mapcid.tmx")  
         pos_inicial = (864, 704)  
-        super().__init__(caminho_mapa, nome_personagem, pos_inicial, inventario)  
+        super().__init__(caminho_mapa, nome_personagem, pos_inicial, inventario, sons)  
 
 class Nivel_mercado(BaseNivel):  
-    def __init__(self, nome_personagem, inventario):  
+    def __init__(self, nome_personagem, inventario, lista_compras, sons):  
+        self.lista_compras = lista_compras
+        inventario.lista_compras = lista_compras 
         caminho_mapa = os.path.join("niveis_data", "mmap_tilesets", "mapmerc.tmx")  
         pos_inicial = (288, 704)  
-        super().__init__(caminho_mapa, nome_personagem, pos_inicial, inventario)  
+        super().__init__(caminho_mapa, nome_personagem, pos_inicial, inventario, sons)  

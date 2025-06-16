@@ -43,24 +43,25 @@ class MenuPrincipal:
         rect_masc.bottomleft = (margem, tela_alt - margem)
         self.tela.blit(self.imagem_canto_masc, rect_masc)
 
-    def rodar(self):
-        while True:
-            for e in pg.event.get():
-                if e.type == pg.QUIT:
+    def rodar(self, eventos):
+        for e in eventos:
+            if e.type == pg.QUIT:
+                self.sons.tocar_click()
+                pg.quit()
+                exit()
+            elif e.type == pg.KEYDOWN:
+                if e.key == pg.K_w:
+                    self.index = (self.index - 1) % len(self.opcoes)
                     self.sons.tocar_click()
-                    pg.quit()
-                    exit()
-                elif e.type == pg.KEYDOWN:
-                    if e.key == pg.K_w:
-                        self.index = (self.index - 1) % len(self.opcoes)
-                        self.sons.tocar_click()
-                    elif e.key == pg.K_s:
-                        self.index = (self.index + 1) % len(self.opcoes)
-                        self.sons.tocar_click()
-                    elif e.key == pg.K_RETURN:
-                        self.sons.tocar_click()
-                        return self.opcoes[self.index]
+                elif e.key == pg.K_s:
+                    self.index = (self.index + 1) % len(self.opcoes)
+                    self.sons.tocar_click()
+                elif e.key == pg.K_RETURN:
+                    self.sons.tocar_click()
+                    return self.opcoes[self.index]
 
-            self.desenhar()
-            pg.display.flip()
-            self.relogio.tick(60)
+        self.desenhar()
+        pg.display.flip()
+        self.relogio.tick(60)
+        return None
+
