@@ -104,10 +104,11 @@ class Jogo:
             elif self.estado == 'opcoes':
                 resultado = self.opcoes.rodar(eventos)
                 self.som.atualizar_volumes(self.opcoes.volume_musica, self.opcoes.volume_sfx)
-                if self.nivel is not None:
-                    self.estado = 'cidade' if isinstance(self.nivel, Nivel_cidade) else 'mercado'
-                else:
-                    self.estado = 'menu'
+                if resultado:  # somente se tela opcoes sinalizar para sair dela
+                    if self.nivel is not None:
+                        self.estado = 'cidade' if isinstance(self.nivel, Nivel_cidade) else 'mercado'
+                    else:
+                        self.estado = 'menu'
 
             elif self.estado in ['cidade', 'mercado']:
                 self.nivel.rodar(dt, teclas, eventos)
