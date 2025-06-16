@@ -5,7 +5,7 @@ import os
 
 def carregar_sprites_personagem():
     cam_base = os.path.join("niveis_data", "personagens_img")
-    tamanho = (300, 450)  # largura x altura ideal
+    tamanho = (200, 350)  # largura x altura ideal
     return {
         'cima': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_w.png")).convert_alpha(), tamanho),
         'baixo': pg.transform.scale(pg.image.load(os.path.join(cam_base, "pmasc_s.png")).convert_alpha(), tamanho),
@@ -21,11 +21,16 @@ class Personagem(pg.sprite.Sprite):
         self.sprites = carregar_sprites_personagem()
         self.direcao_atual = 'baixo'
         self.image = self.sprites[self.direcao_atual]
-        self.rect = self.image.get_rect(center = pos) 
+        self.rect = self.image.get_rect(midbottom = pos)
+        self.hitbox = pg.Rect(0, 0, 30, 50)  # menor que o sprite
+        offset_y = 40 # ← tente ajustar entre 30-50 conforme o visual do sprite
+        self.hitbox.midbottom = (self.rect.centerx, self.rect.bottom - offset_y)
 
         self.direction = pg.math.Vector2()
-        self.pos = pg.math.Vector2(self.rect.center)
+        self.pos = pg.math.Vector2(self.rect.midbottom)
+        self.pos_anterior = self.pos.copy()
         self.speed = 200
+        
 
     
     def input(self):
@@ -60,6 +65,7 @@ class Personagem(pg.sprite.Sprite):
             self.image = self.sprites[self.direcao_atual]
 
     def mover(self, dt):
+        self.pos_anterior = self.pos.copy()
         # Se houver alguma direção pressionada, normaliza o vetor.
         # Isso é necessário para evitar que o personagem se mova mais rápido na diagonal.
         # Exemplo: se o jogador pressionar 'W' e 'D' ao mesmo tempo (cima + direita),
@@ -73,11 +79,22 @@ class Personagem(pg.sprite.Sprite):
 
         #controle separado p/ melhorar colisões
         self.pos.x += self.direction.x * self.speed * dt
-        self.rect.centerx = self.pos.x
-
         self.pos.y += self.direction.y * self.speed * dt
-        self.rect.centery = self.pos.y
+        self.hitbox.midbottom = (round(self.pos.x), round(self.pos.y))
+        self.rect.midbottom = self.hitbox.midbottom
+
+
+        #self.pos.y += self.direction.y * self.speed * dt
+        #self.hitbox.centery = round(self.pos.y)
+        #self.rect.centery = self.hitbox.centery
 
     def update(self, dt):
         self.input()
         self.mover(dt)
+
+    def cancelar_ultimo_movimento(self):
+        self.pos = self.pos_anterior.copy()
+        #self.hitbox.center = self.pos
+        #self.rect.midbottom = self.hitbox.midbottom
+        self.hitbox.midbottom = self.pos
+        self.rect.midbottom = self.hitbox.midbottom
