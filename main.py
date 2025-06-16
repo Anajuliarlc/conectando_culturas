@@ -49,26 +49,21 @@ class Jogo:
                         pg.quit()
                         sys.exit()
 
-                    # Atalhos de inventário no jogo
                     if self.estado in ['cidade', 'mercado']:
-                        self.nivel.rodar(dt, teclas)
+                        if evento.key == pg.K_i:
+                            if self.estado == 'mercado':  # só no mercado
+                                self.inventario.alternar_visibilidade()
+                        elif evento.key == pg.K_UP:
+                            self.inventario.navegar(-1)
+                        elif evento.key == pg.K_DOWN:
+                            self.inventario.navegar(1)
+                        elif evento.key == pg.K_e:
+                            self.estado = 'opcoes'
 
-                        # Inventário só é exibido se o jogador apertar 'i'
-                        for evento in pg.event.get():
-                            if evento.type == pg.KEYDOWN:
-                                if evento.key == pg.K_i:
-                                    self.inventario.alternar_visibilidade()
-                                elif evento.key == pg.K_UP:
-                                    self.inventario.navegar(-1)
-                                elif evento.key == pg.K_DOWN:
-                                    self.inventario.navegar(1)
-                                elif evento.key == pg.K_e:
-                                    self.estado = 'opcoes'
+                    elif self.estado == 'opcoes':
+                        if evento.key == pg.K_e:
+                            self.estado = 'cidade' if isinstance(self.nivel, Nivel_cidade) else 'mercado'
 
-                        self.inventario.desenhar(self.tela)
-
-                    elif self.estado == 'opcoes' and evento.key == pg.K_e:
-                        self.estado = 'cidade' if isinstance(self.nivel, Nivel_cidade) else 'mercado'
 
             if self.estado == 'menu':
                 resultado = self.menu.rodar()

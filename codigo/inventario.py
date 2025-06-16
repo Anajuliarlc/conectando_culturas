@@ -28,5 +28,5 @@ class Inventario:
         fonte = pg.font.SysFont("Arial", 24)
         for i, item in enumerate(self.itens):
             cor = (255, 255, 0) if i == self.selecionado else (255, 255, 255)
-            texto = fonte.render(item.nome_portugues, True, cor)
+            texto = fonte.render(item['nome_portugues'], True, cor)
             tela.blit(texto, (120, 120 + i * 30))
