@@ -5,6 +5,10 @@ class Inventario:
         self.itens = []
         self.visivel = False
         self.selecionado = 0
+        self.nivel = None
+
+    def set_nivel(self, nivel):
+        self.nivel = nivel
 
     def alternar_visibilidade(self):
         self.visivel = not self.visivel
@@ -17,16 +21,16 @@ class Inventario:
     def adicionar_item(self, item):
         self.itens.append(item)
 
-    def remover_selecionado(self):
+    def remover_item(self):
         if not self.itens:
             return
-        # Remove o item selecionado
-        del self.itens[self.selecionado]
-        # Ajusta o índice selecionado para não ultrapassar o tamanho da lista
+        item = self.itens.pop(self.selecionado)
         if self.selecionado >= len(self.itens):
             self.selecionado = len(self.itens) - 1
-        if self.selecionado < 0:
-            self.selecionado = 0
+
+        # Se tem nível e método para recolocar o item
+        if self.nivel:
+            self.nivel.recolocar_item_no_mapa(item)
 
 
     def desenhar(self, tela):

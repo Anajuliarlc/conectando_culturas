@@ -58,6 +58,10 @@ class BaseNivel:
                         })
 
         self.itens_originais = [item.copy() for item in self.itens_mapa]
+        
+    def recolocar_item_no_mapa(self, item):
+        # Adiciona o item na lista dos itens do mapa para reaparecer
+        self.itens_mapa.append(item)
 
     def rodar(self, dt, teclas):
         self.personagem.update(dt)

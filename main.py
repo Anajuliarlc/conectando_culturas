@@ -33,6 +33,7 @@ class Jogo:
             self.nivel = Nivel_cidade(self.nome_personagem, self.inventario)
         elif nome_nivel == 'mercado':
             self.nivel = Nivel_mercado(self.nome_personagem, self.inventario)
+        self.inventario.set_nivel(self.nivel)
 
     def rodar(self):
         while True:
@@ -59,7 +60,7 @@ class Jogo:
                             self.inventario.navegar(1)
                         elif evento.key == pg.K_r:
                             if self.inventario.visivel:
-                                self.inventario.remover_selecionado()
+                                self.inventario.remover_item()
                         elif evento.key == pg.K_o:
                             self.estado = 'opcoes'
 
