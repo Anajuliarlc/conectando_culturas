@@ -6,8 +6,9 @@ from gerenciador_sons import GerenciadorSons
 class QuizFinal:
     def __init__(self, gerenciador_sons):
         self.som = gerenciador_sons
-        self.fonte = pg.font.Font(None, 32)  # Fonte padrão com tamanho 32
-        self.fonte_grande = pg.font.Font(None, 48)
+        self.fonte = pg.font.Font(None, 48)  # Opções (antes 32)
+        self.fonte_grande = pg.font.Font(None, 60)  # Perguntas (antes 48)
+        self.fonte_contador = pg.font.Font(None, 54)  # Contador de acertos/erros
         self.reiniciar()
 
     def reiniciar(self):
@@ -24,10 +25,10 @@ class QuizFinal:
     def carregar_perguntas(self):
                return [
             {"pergunta": "Which fruit has the letter A in the market?",
-                "opcoes": ["a) pear ", "b) banana", "c) apple", "d)grape"],
+                "opcoes": ["a) pear ", "b) banana", "c) apple", "d) grape"],
                 "correta": 2},
             {"pergunta": "Which of these fruits was in the market?",
-                "opcoes": ["a) pear ", "b) banana", "c) tomato", "d)grape"],
+                "opcoes": ["a) pear ", "b) banana", "c) tomato", "d) grape"],
                 "correta": 2},
             {"pergunta": "What is 'cenoura' in English?",
                 "opcoes": ["a) lettuce", "b) carrot", "c) onion", "d) potato"],
@@ -48,19 +49,19 @@ class QuizFinal:
                 "opcoes": ["a) cenoura ", "b) banana", "c) maçã", "d) flour"],
                 "correta": 0},
             {"pergunta": "What is maçã?",
-                "opcoes": ["a) pear ", "b) banana", "c) apple", "d)grape"],
+                "opcoes": ["a) pear ", "b) banana", "c) apple", "d) grape"],
                 "correta": 2},
             {"pergunta": "What is açúcar for?",
                 "opcoes": ["a) put in coffee ", "b) put in rice", "c) put in the egg", "d) put in cheese"],
                 "correta": 0},
             {"pergunta": "Which is the translation of onion?",
-                "opcoes": ["a) cebola ", "b) queijo", "c) arroz", "d)farinha"],
+                "opcoes": ["a) cebola ", "b) queijo", "c) arroz", "d) farinha"],
                 "correta": 0},
             {"pergunta": "What do you buy at the butcher’s?",
-                "opcoes": ["a) carne", "b) ovos", "c) Pão", "d)Fermento em pó"],
+                "opcoes": ["a) carne", "b) ovos", "c) Pão", "d) fermento em pó"],
                 "correta": 0},
             {"pergunta": "Which ingredientes do I use to make pancake(panqueca)?",
-                "opcoes": ["a) farinha ", "b) egg", "c) sugar", "d)all options"],
+                "opcoes": ["a) farinha ", "b) egg", "c) sugar", "d) all options"],
                 "correta": 3},
             {"pergunta": "Which food was at the market?",
                 "opcoes": ["a) manteiga ", "b) agua", "c) feijão", "d) biscoito"],
@@ -112,23 +113,36 @@ class QuizFinal:
     def desenhar(self, tela):
         tela.fill((0, 0, 0))  # tela preta
 
+        largura_tela = tela.get_width()
+
         if not self.concluido:
             pergunta = self.perguntas_atuais[self.pergunta_atual]
-            texto_pergunta = self.fonte_grande.render(pergunta["pergunta"], True, (255, 255, 255))  # branco
-            tela.blit(texto_pergunta, (50, 50))
+            
+            # Centraliza pergunta
+            texto_pergunta = self.fonte_grande.render(pergunta["pergunta"], True, (255, 255, 255))
+            rect_pergunta = texto_pergunta.get_rect(center=(largura_tela // 2, 80))
+            tela.blit(texto_pergunta, rect_pergunta)
 
+            # Desenha opções
             for i, opcao in enumerate(pergunta["opcoes"]):
                 cor = (255, 255, 255) if i == self.opcao_selecionada else (255, 230, 0)
                 texto_opcao = self.fonte.render(opcao, True, cor)
-                tela.blit(texto_opcao, (70, 120 + i * 40))
+                rect_opcao = texto_opcao.get_rect(center=(largura_tela // 2, 180 + i * 60))
+                tela.blit(texto_opcao, rect_opcao)
 
-            texto_contador = self.fonte.render(f"Acertos: {self.acertos} | Erros: {self.erros}", True, (255, 255, 255))
-            tela.blit(texto_contador, (50, 300))
+            # Contador de acertos/erros
+            texto_contador = self.fonte_contador.render(
+                f"Acertos: {self.acertos} | Erros: {self.erros}", True, (255, 255, 255)
+            )
+            rect_contador = texto_contador.get_rect(center=(largura_tela // 2, 450))
+            tela.blit(texto_contador, rect_contador)
+
         else:
             msg = "Parabéns! Você acertou!" if self.resultado == "vitoria" else "Você errou demais! Tente novamente!"
             cor = (0, 200, 0) if self.resultado == "vitoria" else (200, 0, 0)
             texto = self.fonte_grande.render(msg, True, cor)
-            tela.blit(texto, (50, 150))
+            rect_msg = texto.get_rect(center=(largura_tela // 2, 200))
+            tela.blit(texto, rect_msg)
 
 
     def rodar(self, eventos):
